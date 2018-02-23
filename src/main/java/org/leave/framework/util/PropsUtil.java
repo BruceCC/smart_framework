@@ -8,13 +8,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-/*
+/**
 * 属性文件工具类
 * */
 public class PropsUtil {
     private static final Logger LOGGER = LoggerFactory.getLogger(PropsUtil.class);
 
-    /*
+    /**
     * 加载属性文件
     * */
     public static Properties loadProps(String fileName){
@@ -42,7 +42,7 @@ public class PropsUtil {
         return props;
     }
 
-    /*
+    /**
     * 获取字符型属性
     * */
     public static String getString(Properties props, String key){

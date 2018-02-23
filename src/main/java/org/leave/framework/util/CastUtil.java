@@ -1,6 +1,6 @@
 package org.leave.framework.util;
 
-/*
+/**
 * 转型操作工具类
 * */
 public class CastUtil {
