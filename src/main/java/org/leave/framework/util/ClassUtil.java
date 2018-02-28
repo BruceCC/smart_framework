@@ -37,22 +37,27 @@ public class ClassUtil {
             Enumeration<URL> urls = getClassLoader().getResources(packageName.replace(".", "/"));
             while (urls.hasMoreElements()){
                 URL url = urls.nextElement();
+                LOGGER.debug("url:" + url.toString());
                 if(url != null){
                     String protocal = url.getProtocol();
                     if(protocal.equals("file")){
                         String packagePath = url.getPath().replaceAll("%20", "");
+                        LOGGER.debug("packagePath:" + packagePath);
                         addClass(classSet, packagePath, packageName);
                     } else if(protocal.equals("jar")){
                         JarURLConnection jarURLConnection = (JarURLConnection)url.openConnection();
                         if(jarURLConnection != null){
                             JarFile jarFile = jarURLConnection.getJarFile();
+                            LOGGER.debug("jarFile name:" + jarFile.getName());
                             if(jarFile != null){
                                 Enumeration<JarEntry> jarEnttries = jarFile.entries();
                                 while (jarEnttries.hasMoreElements()){
                                     JarEntry jarEntry = jarEnttries.nextElement();
                                     String jarEntryName = jarEntry.getName();
+                                    LOGGER.debug("jarEntryName:" + jarEntryName);
                                     if(jarEntryName.endsWith(".class")){
                                         String className = jarEntryName.substring(0, jarEntryName.lastIndexOf(".")).replaceAll("/", ".");
+                                        LOGGER.debug("class name in the jar:" + className);
                                         doAddClass(classSet, className);
                                     }
                                 }
@@ -72,25 +77,31 @@ public class ClassUtil {
     private static void addClass(Set<Class<?>> classSet, String packagePath, String packageName){
         File[] files = new File(packagePath).listFiles(new FileFilter() {
             public boolean accept(File file) {
+                LOGGER.debug("file name:" + file.getName());
                 return (file.isFile() && file.getName().endsWith(".class")) || file.isDirectory();
             }
         });
+        LOGGER.debug("iterartor files");
         for (File file : files){
             String fileName = file.getName();
+            LOGGER.debug("file name:" + file.getName());
             if(file.isFile()){
                 String className = fileName.substring(0, fileName.lastIndexOf("."));
                 if(StringUtil.isNotEmpay(packageName)){
                     className = packageName + className;
+                    LOGGER.debug("className:" + className);
                 }
                 doAddClass(classSet, className);
             } else{
                 String subPackagePath = fileName;
                 if(StringUtil.isNotEmpay(packagePath)){
                     subPackagePath = packagePath + "/" + subPackagePath;
+                    LOGGER.debug("subPackagePath:" + subPackagePath);
                 }
                 String subPackageName = fileName;
                 if(StringUtil.isNotEmpay(packageName)){
                     subPackageName = packageName + "." + subPackageName;
+                    LOGGER.debug("subPackageName:" + subPackageName);
                 }
                 addClass(classSet, subPackagePath, subPackageName);
             }
@@ -99,7 +110,7 @@ public class ClassUtil {
 
     private static void doAddClass(Set<Class<?>> classes, String className){
         Class<?> cls = loadClass(className, false);
-        classes.add(cls);
+            classes.add(cls);
     }
 
 }
