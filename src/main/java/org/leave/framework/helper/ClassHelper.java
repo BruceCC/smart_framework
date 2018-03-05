@@ -4,6 +4,7 @@ import org.leave.framework.annotation.Controller;
 import org.leave.framework.annotation.Service;
 import org.leave.framework.util.ClassUtil;
 
+import java.lang.annotation.Annotation;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -65,6 +66,14 @@ public final class ClassHelper {
     /**
      * 获取应用包名下带有某注解的所有类
      */
-    //TODO
+    public static Set<Class<?>> getClassSetByAnnotation(Class<? extends Annotation> annotationClasss){
+        Set<Class<?>> classSet = new HashSet<Class<?>>();
+        for (Class<?> cls : CLASS_SET){
+            if(cls.isAnnotationPresent(annotationClasss)){
+                classSet.add(cls);
+            }
+        }
+        return classSet;
+    }
 
 }

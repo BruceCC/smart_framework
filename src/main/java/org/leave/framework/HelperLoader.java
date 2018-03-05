@@ -1,9 +1,6 @@
 package org.leave.framework;
 
-import org.leave.framework.helper.BeanHelper;
-import org.leave.framework.helper.ClassHelper;
-import org.leave.framework.helper.ControllerHelper;
-import org.leave.framework.helper.IocHelper;
+import org.leave.framework.helper.*;
 import org.leave.framework.util.ClassUtil;
 
 public final class HelperLoader {
@@ -11,12 +8,12 @@ public final class HelperLoader {
         Class<?>[] classList = {
                 ClassHelper.class,
                 BeanHelper.class,
+                AopHelper.class,
                 IocHelper.class,
                 ControllerHelper.class
         };
         for (Class<?> cls : classList){
-            //TODO
-            ClassUtil.loadClass(cls.getName(), false);
+            ClassUtil.loadClass(cls.getName(), true);
         }
     }
 }
