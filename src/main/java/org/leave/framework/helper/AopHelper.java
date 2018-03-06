@@ -1,9 +1,11 @@
 package org.leave.framework.helper;
 
 import org.leave.framework.annotation.Aspect;
+import org.leave.framework.annotation.Service;
 import org.leave.framework.proxy.AspectProxy;
 import org.leave.framework.proxy.Proxy;
 import org.leave.framework.proxy.ProxyManager;
+import org.leave.framework.proxy.TransactionProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -69,5 +71,21 @@ public final class AopHelper {
         } catch (Exception e){
             LOGGER.error("aop failure", e);
         }
+    }
+
+    private static void addAspectProxy(Map<Class<?>, Set<Class<?>>> proxyMap) throws Exception{
+        Set<Class<?>> proxyClassSet = ClassHelper.getClassSetBySuper(AspectProxy.class);
+        for (Class<?> proxyClass : proxyClassSet){
+            if(proxyClass.isAnnotationPresent(Aspect.class)){
+                Aspect aspect = proxyClass.getAnnotation(Aspect.class);
+                Set<Class<?>> targetClass = createTargetClassSet(aspect);
+                proxyMap.put(proxyClass, targetClass);
+            }
+        }
+    }
+
+    private static void addTransactionProxy(Map<Class<?>, Set<Class<?>>> proxyMap){
+        Set<Class<?>> serviceClassSet = ClassHelper.getClassSetByAnnotation(Service.class);
+        proxyMap.put(TransactionProxy.class, serviceClassSet);
     }
 }
