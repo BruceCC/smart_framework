@@ -18,6 +18,12 @@ import java.util.*;
 public final class AopHelper {
     private static final Logger LOGGER = LoggerFactory.getLogger(AopHelper.class);
 
+    /**
+     * 根据切面注解类的值获取所有属于这类注解的目标集合
+     * @param aspect
+     * @return
+     * @throws Exception
+     */
     private static Set<Class<?>> createTargetClassSet(Aspect aspect) throws Exception{
         Set<Class<?>> targetClassSet = new HashSet<Class<?>>();
         Class<? extends Annotation> annotation = aspect.value();
@@ -27,6 +33,11 @@ public final class AopHelper {
         return targetClassSet;
     }
 
+    /**
+     * 返回代理类与目标类集合之间的映射关系
+     * @return
+     * @throws Exception
+     */
     private static Map<Class<?>, Set<Class<?>>> createProxyMap() throws Exception{
         Map<Class<?>, Set<Class<?>>> proxyMap = new HashMap<Class<?>, Set<Class<?>>>();
         Set<Class<?>> proxyClassSet = ClassHelper.getClassSetBySuper(AspectProxy.class);
@@ -40,6 +51,12 @@ public final class AopHelper {
         return proxyMap;
     }
 
+    /**
+     * 根据代理类和目标类之间的映射关系分析出目标类与代理类对象列表之间的关系
+     * @param proxyMap
+     * @return
+     * @throws Exception
+     */
     private static Map<Class<?>, List<Proxy>> createTargetMap(Map<Class<?>, Set<Class<?>>> proxyMap) throws Exception{
         Map<Class<?>, List<Proxy>> targetMap = new HashMap<Class<?>, List<Proxy>>();
         for (Map.Entry<Class<?>, Set<Class<?>>> proxyEntity : proxyMap.entrySet()){

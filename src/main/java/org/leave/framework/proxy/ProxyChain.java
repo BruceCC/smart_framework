@@ -1,6 +1,8 @@
 package org.leave.framework.proxy;
 
 import net.sf.cglib.proxy.MethodProxy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -18,6 +20,8 @@ public class ProxyChain {
 
     private List<Proxy> proxyList = new ArrayList<Proxy>();
     private int proxyIndex = 0;
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProxyChain.class);
 
     public ProxyChain(Class<?> targetClass, Object targetObject, Method targetMethod, MethodProxy methodProxy, Object[] methodParams, List<Proxy> proxyList) {
         this.targetClass = targetClass;
@@ -50,6 +54,8 @@ public class ProxyChain {
             methodResult = proxyList.get(proxyIndex++).doProxy(this);
         } else{
             methodResult = methodProxy.invokeSuper(targetObject, methodParams);
+            LOGGER.debug("ProxyChain.doProxyChain targetClass: " + targetClass);
+
         }
         return methodResult;
     }

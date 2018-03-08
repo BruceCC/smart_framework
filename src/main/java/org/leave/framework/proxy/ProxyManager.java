@@ -11,6 +11,7 @@ import java.util.List;
  * 代理管理器
  */
 public class ProxyManager {
+    @SuppressWarnings("unchecked")
     public static <T> T creatProxy(final Class<?> targetClass, final List<Proxy> proxyList){
         return (T) Enhancer.create(targetClass, new MethodInterceptor() {
             public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {

@@ -24,6 +24,9 @@ import java.util.Properties;
 public class DatabaseHelper {
     private static final Logger LOGGER = LoggerFactory.getLogger(DatabaseHelper.class);
     private static final QueryRunner QUERY_RUNNNER = new QueryRunner();
+    /**
+     * 每个线程都拥有自己的链接
+     */
     private static final ThreadLocal<Connection> CONNECTION_HOLDER = new ThreadLocal<Connection>();
     private static final BasicDataSource DATA_SOURCE;
 
