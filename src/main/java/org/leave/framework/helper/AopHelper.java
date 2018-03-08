@@ -40,7 +40,7 @@ public final class AopHelper {
      */
     private static Map<Class<?>, Set<Class<?>>> createProxyMap() throws Exception{
         Map<Class<?>, Set<Class<?>>> proxyMap = new HashMap<Class<?>, Set<Class<?>>>();
-        Set<Class<?>> proxyClassSet = ClassHelper.getClassSetBySuper(AspectProxy.class);
+        /*Set<Class<?>> proxyClassSet = ClassHelper.getClassSetBySuper(AspectProxy.class);
         for (Class<?> proxyClass : proxyClassSet){
             if(proxyClass.isAnnotationPresent(Aspect.class)){
                 Aspect aspect = proxyClass.getAnnotation(Aspect.class);
@@ -48,6 +48,10 @@ public final class AopHelper {
                 proxyMap.put(proxyClass, targetClassSet);
             }
         }
+        return proxyMap;*/
+
+        addAspectProxy(proxyMap);
+        addTransactionProxy(proxyMap);
         return proxyMap;
     }
 
