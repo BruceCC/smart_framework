@@ -1,6 +1,7 @@
 package org.leave.framework.bean;
 
 import org.leave.framework.util.CastUtil;
+import org.leave.framework.util.CollectionUtil;
 
 import java.util.Map;
 
@@ -16,6 +17,10 @@ public class Param {
 
     public long getLong(String name){
         return CastUtil.castLong(paramMap.get(name));
+    }
+
+    public boolean isEmpty(){
+        return CollectionUtil.isEmpty(paramMap);
     }
 
     /**

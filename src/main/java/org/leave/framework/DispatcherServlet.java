@@ -54,7 +54,7 @@ public class DispatcherServlet extends HttpServlet {
             //获取controller类和bean实例
             Class<?> controllerClass = handler.getControllerClass();
             Object controllerBean = BeanHelper.getBean(controllerClass);
-            //创建其你去参数对象
+            //创建参数对象
             Map<String, Object> paramMap = new HashMap<String, Object>();
             Enumeration<String> paramNames = req.getParameterNames();
             while (paramNames.hasMoreElements()){
@@ -79,7 +79,13 @@ public class DispatcherServlet extends HttpServlet {
             Param param = new Param(paramMap);
             //调用action方法
             Method actionMethod = handler.getActionMethod();
-            Object result = ReflectionUtil.invokeMethod(controllerBean, actionMethod, param);
+            /*Object result = ReflectionUtil.invokeMethod(controllerBean, actionMethod, param);*/
+            Object result;
+            if (param.isEmpty()){
+                result = ReflectionUtil.invokeMethod(controllerBean, actionMethod);
+            } else{
+                result = ReflectionUtil.invokeMethod(controllerBean, actionMethod, param);
+            }
             //处理action方法返回值
             if(result instanceof View){
                 //返回jsp页面
