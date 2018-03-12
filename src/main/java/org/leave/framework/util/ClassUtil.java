@@ -89,7 +89,7 @@ public class ClassUtil {
                 String className = fileName.substring(0, fileName.lastIndexOf("."));
                 if(StringUtil.isNotEmpay(packageName)){
                     className = packageName + className;
-                    LOGGER.debug("className:" + className);
+                    LOGGER.debug("className:" + "." + className);
                 }
                 doAddClass(classSet, className);
             } else{

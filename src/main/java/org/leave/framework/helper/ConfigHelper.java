@@ -35,4 +35,10 @@ public final class ConfigHelper {
     public static String getAppAssetPath(){
         return PropsUtil.getString(CONFIG_PROPS, ConfigConstant.APP_ASSET_PATH, "asset/");
     }
+
+    public static void main(String[] args) {
+        System.out.println(ConfigHelper.getAppJspPath());
+        System.out.println(ConfigHelper.getAppBasePackage());
+        System.out.println(ConfigHelper.getAppAssetPath());
+    }
 }
