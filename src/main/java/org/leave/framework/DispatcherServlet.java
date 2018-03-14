@@ -35,11 +35,17 @@ public class DispatcherServlet extends HttpServlet {
         HelperLoader.init();
         //获取ServletContext对象，用于注册servlet
         ServletContext servletContext = config.getServletContext();
+
         //注册处理jsp的servlet
         ServletRegistration jspServlet = servletContext.getServletRegistration("jsp");
+        System.out.println("ConfigHelper.getAppJspPath() + \"*\"" + ConfigHelper.getAppJspPath() + "*");
+        jspServlet.addMapping("/index.jsp");
         jspServlet.addMapping(ConfigHelper.getAppJspPath() + "*");
+
         //注册处理静态资源的默认servlet
         ServletRegistration defaultServlet = servletContext.getServletRegistration("default");
+        System.out.println("ConfigHelper.getAppAssetPath() + \"*\"" + ConfigHelper.getAppAssetPath() + "*");
+        defaultServlet.addMapping("/favicon.ico");
         defaultServlet.addMapping(ConfigHelper.getAppAssetPath() + "*");
     }
 
@@ -48,6 +54,10 @@ public class DispatcherServlet extends HttpServlet {
         //获取请求方法与请求路径
         String requestMethod = req.getMethod().toLowerCase();
         String requestPath = req.getPathInfo();
+        //resp.sendRedirect(req.getContextPath()+ /*ConfigHelper.getAppJspPath()+*/ "/test.jsp");
+        /*req.getRequestDispatcher(ConfigHelper.getAppJspPath()+"test.jsp").forward(req, resp);
+
+        return;*/
         //获取action处理器
         Handler handler = ControllerHelper.getHandle(requestMethod, requestPath);
         if(handler != null){
@@ -79,7 +89,6 @@ public class DispatcherServlet extends HttpServlet {
             Param param = new Param(paramMap);
             //调用action方法
             Method actionMethod = handler.getActionMethod();
-            /*Object result = ReflectionUtil.invokeMethod(controllerBean, actionMethod, param);*/
             Object result;
             if (param.isEmpty()){
                 result = ReflectionUtil.invokeMethod(controllerBean, actionMethod);
@@ -99,6 +108,9 @@ public class DispatcherServlet extends HttpServlet {
                         for (Map.Entry<String, Object> entry : model.entrySet()){
                             req.setAttribute(entry.getKey(), entry.getValue());
                         }
+                        System.out.println("ConfigHelper.getAppJspPath() + path："+ ConfigHelper.getAppJspPath() + path);
+                        System.out.println("req.getContextPath()+ path："+ req.getContextPath()+ path);
+
                         req.getRequestDispatcher(ConfigHelper.getAppJspPath() + path).forward(req, resp);
                     }
                 }

@@ -88,14 +88,15 @@ public class ClassUtil {
             if(file.isFile()){
                 String className = fileName.substring(0, fileName.lastIndexOf("."));
                 if(StringUtil.isNotEmpay(packageName)){
-                    className = packageName + className;
+                    className = packageName + "." +  className;
                     LOGGER.debug("className:" + "." + className);
                 }
                 doAddClass(classSet, className);
             } else{
                 String subPackagePath = fileName;
                 if(StringUtil.isNotEmpay(packagePath)){
-                    subPackagePath = packagePath + "/" + subPackagePath;
+                    //subPackagePath = packagePath + "/" + subPackagePath;
+                    subPackagePath = packagePath + subPackagePath;
                     LOGGER.debug("subPackagePath:" + subPackagePath);
                 }
                 String subPackageName = fileName;
