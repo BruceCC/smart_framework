@@ -6,7 +6,6 @@ import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.leave.framework.util.CollectionUtil;
-import org.leave.framework.util.PropsUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,7 +18,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 public class DatabaseHelper {
     private static final Logger LOGGER = LoggerFactory.getLogger(DatabaseHelper.class);
@@ -36,11 +34,10 @@ public class DatabaseHelper {
     private static final String PASSWORD;
 
     static {
-        Properties conf = PropsUtil.loadProps("config.properties");
-        DRIVER = conf.getProperty("jdbc.driver");
-        URL = conf.getProperty("jdbc.url");
-        USERNAME = conf.getProperty("jdbc.username");
-        PASSWORD = conf.getProperty("jdbc.password");
+        DRIVER = ConfigHelper.getJdbcDriver();
+        URL = ConfigHelper.getJdbcUrl();
+        USERNAME = ConfigHelper.getJdbcUserName();
+        PASSWORD = ConfigHelper.getJdbcPassword();
 
         DATA_SOURCE = new BasicDataSource();
         DATA_SOURCE.setDriverClassName(DRIVER);

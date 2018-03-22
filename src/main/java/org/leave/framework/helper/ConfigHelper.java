@@ -36,6 +36,10 @@ public final class ConfigHelper {
         return PropsUtil.getString(CONFIG_PROPS, ConfigConstant.APP_ASSET_PATH, "/asset/");
     }
 
+    public static int getAppUploadLimit(){
+        return PropsUtil.getInt(CONFIG_PROPS, ConfigConstant.APP_UPLOAD_LIMIT, 10);
+    }
+
     public static void main(String[] args) {
         System.out.println(ConfigHelper.getAppJspPath());
         System.out.println(ConfigHelper.getAppBasePackage());
